@@ -62,7 +62,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '*.rpm, *.deb'
-            cleanWs()
+            echo 'Build finished'
         }
     }
 }
