@@ -35,6 +35,7 @@ pipeline {
                 cp ${WORKSPACE}/packaging/rpm/count-files.spec ~/rpmbuild/SPECS/
                 rpmbuild -ba ~/rpmbuild/SPECS/count-files.spec
                 cp ~/rpmbuild/RPMS/noarch/*.rpm ${WORKSPACE}/
+                chmod 666 ${WORKSPACE}/*.rpm
                 '''
             }
         }
@@ -55,6 +56,7 @@ pipeline {
                 cd build/${PACKAGE_NAME}-${PACKAGE_VERSION}
                 dpkg-buildpackage -us -uc -b
                 cp ../*.deb ${WORKSPACE}/
+                chmod 666 ${WORKSPACE}/*.deb
                 '''
             }
         }
@@ -62,7 +64,6 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '*.rpm, *.deb'
-            echo 'Build finished'
         }
     }
 }
